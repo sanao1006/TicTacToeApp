@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.example.tictactoe.ui.theme.TicTacToeTheme
 
 class MainActivity : ComponentActivity() {
+    lateinit var viewModel: PlayerViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
+
                     }
                 }
             }
@@ -40,36 +42,3 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@Composable
-fun Board() {
-    Column {
-        for (i in 0 until 3) {
-            Row {
-                for (j in 0 until 3) {
-                    Box(
-                        modifier = Modifier
-                            .width(80.dp)
-                            .height(80.dp)
-                            .border(1.dp, Color.Black)
-                    ) {
-                        Button(
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier.fillMaxSize(),
-                            colors = ButtonDefaults.buttonColors(
-                                backgroundColor = Color.Cyan
-                            )
-                        ) {
-
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun BoardPreview(){
-    Board()
-}

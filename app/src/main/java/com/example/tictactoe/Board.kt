@@ -4,6 +4,11 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -11,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Board() {
+fun Board(viewModel: PlayerViewModel ) {
     Column {
         for (i in 0 until 3) {
             Row {
@@ -23,12 +28,16 @@ fun Board() {
                             .border(1.dp, Color.Black)
                     ) {
                         Button(
-                            onClick = { /*TODO*/ },
+                            onClick = { viewModel.onCellClicked(i, j) },
                             modifier = Modifier.fillMaxSize(),
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = Color.Cyan
                             )
                         ) {
+                            if(viewModel.boardState.value[i][j] != 0){
+                                Icon(imageVector = viewModel.putIcon(i, j), contentDescription = null)
+
+                            }
 
                         }
                     }
@@ -36,10 +45,4 @@ fun Board() {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun BoardPreview(){
-    Board()
 }

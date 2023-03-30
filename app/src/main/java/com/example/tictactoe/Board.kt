@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
+import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
-fun Board(viewModel: PlayerViewModel ) {
+fun Board(viewModel: PlayerViewModel = viewModel() ) {
     Column {
         for (i in 0 until 3) {
             Row {

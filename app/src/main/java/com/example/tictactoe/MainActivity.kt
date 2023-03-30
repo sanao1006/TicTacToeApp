@@ -10,7 +10,6 @@ import androidx.compose.material.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.tictactoe.ui.theme.TicTacToeTheme
-import dagger.hilt.android.AndroidEntryPoint
 
 
 class MainActivity : ComponentActivity() {

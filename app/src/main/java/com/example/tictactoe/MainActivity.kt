@@ -13,7 +13,6 @@ import com.example.tictactoe.ui.theme.TicTacToeTheme
 
 
 class MainActivity : ComponentActivity() {
-    private val viewModel by viewModels<PlayerViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -27,7 +26,7 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Board(viewModel = viewModel)
+                        Board()
 
                     }
                 }

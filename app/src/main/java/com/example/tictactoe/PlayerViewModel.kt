@@ -57,7 +57,6 @@ class PlayerViewModel : ViewModel() {
         get() = _boardState.asStateFlow()
 
     fun onCellClicked(row: Int, col: Int) {
-        if (!isCellChosen(row, col)) {
             _isChosen.value[row][col] = true
             val newState = when (nowPlayer.value) {
                 Player.ONE -> CellState.CIRCLE
@@ -76,8 +75,6 @@ class PlayerViewModel : ViewModel() {
                         cell
                     }
                 }.toMutableList()
-            }
-
         }
 
     }

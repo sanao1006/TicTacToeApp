@@ -36,7 +36,11 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
                         .clickable {
 //                        セルの状態書き換え
 //                        プレイヤーの変更
-                            viewModel.onCellClicked(rIndex, cIndex)
+                            if (!viewModel.isCellChosen(rIndex, cIndex)) {
+                                viewModel.onCellClicked(rIndex, cIndex)
+                            } else{
+//                                TODO 警告を出す
+                            }
                         }
                         .width(80.dp)
                         .height(80.dp)

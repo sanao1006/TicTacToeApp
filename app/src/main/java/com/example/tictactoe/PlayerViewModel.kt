@@ -8,44 +8,48 @@ import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
+typealias NowCellState = MutableStateFlow<CellState>
 
 class PlayerViewModel : ViewModel() {
-    val nowPlayer: MutableState<Player> = mutableStateOf(Player.ONE)
+    val _nowCellState: MutableStateFlow<CellState> = MutableStateFlow(CellState.EMPTY)
+    val nowCellState: StateFlow<CellState>
+        get() = _nowCellState.asStateFlow()
+
+    val nowPlayer: MutableStateFlow<Player> = MutableStateFlow(Player.ONE)
 
     // Each parameter of `boardState
     // 0: No one selected
     // 1: Player1 has selected
     // 2: Player2 is selecting
-    private val _boardState: MutableState<List<MutableList<CellState>>> = mutableStateOf(
+    private val _boardState: MutableStateFlow<List<MutableList<StateFlow<CellState>>>> = MutableStateFlow(
         listOf(
-            mutableListOf(CellState.EMPTY, CellState.EMPTY, CellState.EMPTY),
-            mutableListOf(CellState.EMPTY, CellState.EMPTY, CellState.EMPTY),
-            mutableListOf(CellState.EMPTY, CellState.EMPTY, CellState.EMPTY)
+            mutableListOf(nowCellState, nowCellState, nowCellState),
+            mutableListOf(nowCellState, nowCellState, nowCellState),
+            mutableListOf(nowCellState, nowCellState, nowCellState)
         )
 
     )
 
-    val boardState: State<List<MutableList<CellState>>> = _boardState
+    val boardState: StateFlow<List<MutableList<StateFlow<CellState>>>>
+        get() = _boardState.asStateFlow()
 
     fun onCellClicked(row: Int, col: Int) {
         when (nowPlayer.value) {
             Player.ONE -> {
-                _boardState.value[row][col] == 1
+                _nowCellState.value = CellState.CIRCLE
+                _boardState.value[row][col] = nowCellState
                 nowPlayer.value = Player.TWO
             }
             Player.TWO -> {
-                _boardState.value[row][col] == 2
+                _nowCellState.value = CellState.CROSS
+                _boardState.value[row][col] = nowCellState
                 nowPlayer.value = Player.ONE
             }
         }
     }
 
-    fun putIcon(row: Int, col: Int): ImageVector {
-        return if (_boardState.value[row][col] == 1) {
-            Icons.Filled.CheckCircle
-        } else {
-            Icons.Rounded.Close
-        }
-
-    }
 }

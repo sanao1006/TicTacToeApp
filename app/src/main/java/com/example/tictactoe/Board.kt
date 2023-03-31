@@ -27,7 +27,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun Board(viewModel: PlayerViewModel = viewModel()) {
     val boardState by viewModel.boardState.collectAsState()
-    val nowPlayer by viewModel.nowPlayer.collectAsState()
 
     Column {
         boardState.forEachIndexed { rIndex, row ->
@@ -47,8 +46,7 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
-                            val b = cell.collectAsState()
-                            when (b.value) {
+                            when (cell.value) {
 //                          セルの状態に応じてアイコンを表示
                                 CellState.CIRCLE -> {
                                     Icon(Icons.Default.CheckCircle, contentDescription = null)

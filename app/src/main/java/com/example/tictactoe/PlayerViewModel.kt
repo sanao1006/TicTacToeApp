@@ -1,19 +1,9 @@
 package com.example.tictactoe
 
-import android.util.Log
-import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.rounded.AddCircle
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-
 
 class PlayerViewModel : ViewModel() {
     val nowCellState: MutableStateFlow<CellState> = MutableStateFlow(CellState.EMPTY)

@@ -26,8 +26,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun Board(viewModel: PlayerViewModel = viewModel()) {
+    val boardState by viewModel.boardState.collectAsState()
+    val nowPlayer by viewModel.nowPlayer.collectAsState()
+
     Column {
-        viewModel.boardState.value.forEachIndexed { rIndex, row ->
+        boardState.forEachIndexed { rIndex, row ->
             Row {
                 row.forEachIndexed { cIndex, cell ->
                     Box(modifier = Modifier
@@ -44,7 +47,8 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
-                            when (cell.value) {
+                            val b = cell.collectAsState()
+                            when (b.value) {
 //                          セルの状態に応じてアイコンを表示
                                 CellState.CIRCLE -> {
                                     Icon(Icons.Default.CheckCircle, contentDescription = null)

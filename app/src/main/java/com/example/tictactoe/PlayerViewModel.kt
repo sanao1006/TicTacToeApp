@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class PlayerViewModel : ViewModel() {
     val nowCellState: MutableStateFlow<CellState> = MutableStateFlow(CellState.EMPTY)
-    val nowPlayer: MutableStateFlow<Player> = MutableStateFlow(Player.ONE)
+    val _nowPlayer: MutableStateFlow<Player> = MutableStateFlow(Player.ONE)
+    val nowPlayer: StateFlow<Player> = _nowPlayer
 
     val _isChosen: MutableStateFlow<List<MutableList<Boolean>>> =
         MutableStateFlow(List(3) { MutableList(3) { false } })
@@ -53,7 +54,7 @@ class PlayerViewModel : ViewModel() {
                 Player.TWO -> CellState.CROSS
             }
             nowCellState.value = newState
-            nowPlayer.value = when (nowPlayer.value) {
+            _nowPlayer.value = when (nowPlayer.value) {
                 Player.ONE -> Player.TWO
                 Player.TWO -> Player.ONE
             }

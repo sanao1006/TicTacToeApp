@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
@@ -23,7 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun Board(viewModel: PlayerViewModel = viewModel()) {
     val boardState by viewModel.boardState.collectAsState()
-
+    val nowPlayer by viewModel.nowPlayer.collectAsState()
     val context = LocalContext.current
 
     Column {
@@ -36,8 +37,10 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
 //                        プレイヤーの変更
                             if (!viewModel.isCellChosen(rIndex, cIndex)) {
                                 viewModel.onCellClicked(rIndex, cIndex)
-                            } else{
-                                Toast.makeText(context,"選択できません",Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast
+                                    .makeText(context, "選択できません", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                         .width(80.dp)
@@ -64,5 +67,17 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
                 }
             }
         }
+        Text(
+            text = "プレイヤー ${
+                when (nowPlayer) {
+                    Player.ONE -> {
+                        "1"
+                    }
+                    Player.TWO -> {
+                        "2"
+                    }
+                }
+            } の番です"
+        )
     }
 }

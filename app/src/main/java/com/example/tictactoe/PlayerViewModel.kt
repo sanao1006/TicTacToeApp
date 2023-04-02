@@ -1,6 +1,8 @@
 package com.example.tictactoe
 
 import androidx.lifecycle.ViewModel
+import com.example.tictactoe.data.CellState
+import com.example.tictactoe.data.Player
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

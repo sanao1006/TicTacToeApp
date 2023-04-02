@@ -1,8 +1,8 @@
-package com.example.tictactoe.component
+package com.example.tictactoe.compose
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.example.tictactoe.Player
+import com.example.tictactoe.data.Player
 
 @Composable
 fun PlayerNameLabel(nowPlayer: Player) {

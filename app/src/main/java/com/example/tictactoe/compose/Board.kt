@@ -2,25 +2,16 @@ package com.example.tictactoe
 
 import android.annotation.SuppressLint
 import android.widget.Toast
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.tictactoe.component.Cell
-import com.example.tictactoe.component.PlayerNameLabel
+import com.example.tictactoe.compose.Cell
+import com.example.tictactoe.compose.PlayerNameLabel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable

@@ -1,6 +1,7 @@
 package com.example.tictactoe
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -21,6 +23,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun Board(viewModel: PlayerViewModel = viewModel()) {
     val boardState by viewModel.boardState.collectAsState()
+
+    val context = LocalContext.current
 
     Column {
         boardState.forEachIndexed { rIndex, row ->
@@ -33,7 +37,7 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
                             if (!viewModel.isCellChosen(rIndex, cIndex)) {
                                 viewModel.onCellClicked(rIndex, cIndex)
                             } else{
-//                                TODO 警告を出す
+                                Toast.makeText(context,"選択できません",Toast.LENGTH_SHORT).show()
                             }
                         }
                         .width(80.dp)

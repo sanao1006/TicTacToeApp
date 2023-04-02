@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tictactoe.component.Cell
+import com.example.tictactoe.component.PlayerNameLabel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -52,17 +53,7 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
                 }
             }
         }
-        Text(
-            text = "プレイヤー ${
-                when (nowPlayer) {
-                    Player.ONE -> {
-                        "1"
-                    }
-                    Player.TWO -> {
-                        "2"
-                    }
-                }
-            } の番です"
-        )
+        
+        PlayerNameLabel(nowPlayer = nowPlayer)
     }
 }

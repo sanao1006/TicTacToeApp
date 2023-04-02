@@ -3,6 +3,8 @@ package com.example.tictactoe.component
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -20,7 +22,12 @@ fun Cell(
     cell: MutableStateFlow<CellState>,
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier.border(width = 1.dp, color = Color.Black)) {
+    Box(
+        modifier = modifier
+            .width(80.dp)
+            .height(80.dp)
+            .border(width = 1.dp, color = Color.Black)
+    ) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center

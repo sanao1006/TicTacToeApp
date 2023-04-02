@@ -47,8 +47,7 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
                                         .show()
                                 }
                             }
-                            .width(80.dp)
-                            .height(80.dp)
+
                     )
                 }
             }

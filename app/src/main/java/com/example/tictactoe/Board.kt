@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.tictactoe.component.Cell
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -31,39 +32,23 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
         boardState.forEachIndexed { rIndex, row ->
             Row {
                 row.forEachIndexed { cIndex, cell ->
-                    Box(modifier = Modifier
-                        .clickable {
+                    Cell(
+                        cell = cell,
+                        modifier = Modifier
+                            .clickable {
 //                        セルの状態書き換え
 //                        プレイヤーの変更
-                            if (!viewModel.isCellChosen(rIndex, cIndex)) {
-                                viewModel.onCellClicked(rIndex, cIndex)
-                            } else {
-                                Toast
-                                    .makeText(context, "選択できません", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
-                        }
-                        .width(80.dp)
-                        .height(80.dp)
-                        .border(width = 1.dp, color = Color.Black)
-                    ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            when (cell.value) {
-//                          セルの状態に応じてアイコンを表示
-                                CellState.CIRCLE -> {
-                                    Icon(Icons.Default.CheckCircle, contentDescription = null)
+                                if (!viewModel.isCellChosen(rIndex, cIndex)) {
+                                    viewModel.onCellClicked(rIndex, cIndex)
+                                } else {
+                                    Toast
+                                        .makeText(context, "選択できません", Toast.LENGTH_SHORT)
+                                        .show()
                                 }
-                                CellState.CROSS -> {
-                                    Icon(Icons.Default.Close, contentDescription = null)
-                                }
-                                CellState.EMPTY -> {}
                             }
-
-                        }
-                    }
+                            .width(80.dp)
+                            .height(80.dp)
+                    )
                 }
             }
         }

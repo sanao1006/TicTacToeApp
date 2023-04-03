@@ -16,10 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.tictactoe.data.CellState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun Cell(
-    cell: MutableStateFlow<CellState>,
+    cell: StateFlow<CellState>,
     modifier: Modifier = Modifier
 ) {
     Box(

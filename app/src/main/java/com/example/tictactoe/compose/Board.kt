@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,6 +21,7 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
     val boardState by viewModel.boardState.collectAsState()
     val nowPlayer by viewModel.nowPlayer.collectAsState()
     val context = LocalContext.current
+    val winState by viewModel.winState.collectAsState()
 
     Column {
         boardState.forEachIndexed { rIndex, row ->
@@ -43,6 +46,7 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
                 }
             }
         }
+        Text(text = winState.toString())
         
         PlayerNameLabel(nowPlayer = nowPlayer)
     }

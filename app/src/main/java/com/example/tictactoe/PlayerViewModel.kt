@@ -1,11 +1,18 @@
 package com.example.tictactoe
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tictactoe.data.CellState
 import com.example.tictactoe.data.Player
+import com.example.tictactoe.data.WinState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filter
 
 class PlayerViewModel : ViewModel() {
     val nowCellState: MutableStateFlow<CellState> = MutableStateFlow(CellState.EMPTY)
@@ -15,6 +22,9 @@ class PlayerViewModel : ViewModel() {
     val _isChosen: MutableStateFlow<List<MutableList<Boolean>>> =
         MutableStateFlow(List(3) { MutableList(3) { false } })
     val isChosen: StateFlow<List<MutableList<Boolean>>> = _isChosen
+
+    val _winState: MutableStateFlow<WinState> = MutableStateFlow(WinState.Draw)
+    val winState: StateFlow<WinState> = _winState
 
     fun isCellChosen(row: Int, col: Int): Boolean {
         return _isChosen.value[row][col]
@@ -29,7 +39,7 @@ class PlayerViewModel : ViewModel() {
             List(3) { MutableList(3) { MutableStateFlow(CellState.EMPTY) } }
         )
 
-    val boardState: StateFlow<List<List<MutableStateFlow<CellState>>>>
+    val boardState: StateFlow<List<List<StateFlow<CellState>>>>
         get() = _boardState.asStateFlow()
 
     fun onCellClicked(row: Int, col: Int) {
@@ -52,8 +62,20 @@ class PlayerViewModel : ViewModel() {
                 }
             }.toMutableList()
         }
+        checkBattleState()
 
+    }
+
+    fun checkBattleState(){
+        if(_boardState.value.any { col -> col.all { cellItem -> cellItem.value == CellState.CIRCLE } }){ _winState.value = WinState.Player1Win}
+        if(transpose(_boardState.value).any { col -> col.all { cellItem -> cellItem.value == CellState.CIRCLE   } }){ _winState.value = WinState.Player1Win  }
+        if(_boardState.value.any { col -> col.all { cellItem -> cellItem.value == CellState.CROSS } }){ _winState.value = WinState.Player2Win}
+        if(transpose(_boardState.value).any { col -> col.all { cellItem -> cellItem.value == CellState.CROSS   } }){ _winState.value = WinState.Player2Win  }
     }
 
 }
 
+fun <T> transpose(list: List<List<T>>): List<List<T>> =
+    list.first().mapIndexed { index, _ ->
+        list.map { row -> row[index] }
+    }

@@ -1,10 +1,5 @@
 package com.example.tictactoe
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tictactoe.data.CellState
 import com.example.tictactoe.data.Player
@@ -12,7 +7,6 @@ import com.example.tictactoe.data.WinState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filter
 
 class PlayerViewModel : ViewModel() {
     val nowCellState: MutableStateFlow<CellState> = MutableStateFlow(CellState.EMPTY)

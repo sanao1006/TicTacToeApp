@@ -26,48 +26,31 @@ class PlayerViewModel : ViewModel() {
     // 2: Player2 is selecting
     private val _boardState: MutableStateFlow<List<MutableList<MutableStateFlow<CellState>>>> =
         MutableStateFlow(
-            listOf(
-                mutableListOf(
-                    MutableStateFlow(CellState.EMPTY),
-                    MutableStateFlow(CellState.EMPTY),
-                    MutableStateFlow(CellState.EMPTY)
-                ),
-                mutableListOf(
-                    MutableStateFlow(CellState.EMPTY),
-                    MutableStateFlow(CellState.EMPTY),
-                    MutableStateFlow(CellState.EMPTY)
-                ),
-                mutableListOf(
-                    MutableStateFlow(CellState.EMPTY),
-                    MutableStateFlow(CellState.EMPTY),
-                    MutableStateFlow(CellState.EMPTY)
-                )
-            )
-
+            List(3) { MutableList(3) { MutableStateFlow(CellState.EMPTY) } }
         )
 
     val boardState: StateFlow<List<List<MutableStateFlow<CellState>>>>
         get() = _boardState.asStateFlow()
 
     fun onCellClicked(row: Int, col: Int) {
-            _isChosen.value[row][col] = true
-            val newState = when (nowPlayer.value) {
-                Player.ONE -> CellState.CIRCLE
-                Player.TWO -> CellState.CROSS
-            }
-            nowCellState.value = newState
-            _nowPlayer.value = when (nowPlayer.value) {
-                Player.ONE -> Player.TWO
-                Player.TWO -> Player.ONE
-            }
-            _boardState.value = _boardState.value.mapIndexed { rIndex, rowList ->
-                rowList.mapIndexed { cIndex, cell ->
-                    if (rIndex == row && cIndex == col) {
-                        MutableStateFlow(newState)
-                    } else {
-                        cell
-                    }
-                }.toMutableList()
+        _isChosen.value[row][col] = true
+        val newState = when (nowPlayer.value) {
+            Player.ONE -> CellState.CIRCLE
+            Player.TWO -> CellState.CROSS
+        }
+        nowCellState.value = newState
+        _nowPlayer.value = when (nowPlayer.value) {
+            Player.ONE -> Player.TWO
+            Player.TWO -> Player.ONE
+        }
+        _boardState.value = _boardState.value.mapIndexed { rIndex, rowList ->
+            rowList.mapIndexed { cIndex, cell ->
+                if (rIndex == row && cIndex == col) {
+                    MutableStateFlow(newState)
+                } else {
+                    cell
+                }
+            }.toMutableList()
         }
 
     }

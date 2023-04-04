@@ -19,7 +19,6 @@ class PlayerViewModel : ViewModel() {
 
     val _isChosen: MutableStateFlow<List<MutableList<Boolean>>> =
         MutableStateFlow(List(3) { MutableList(3) { false } })
-    val isChosen: StateFlow<List<MutableList<Boolean>>> = _isChosen
 
     val _winState: MutableStateFlow<WinState> = MutableStateFlow(WinState.Draw)
     val winState: StateFlow<WinState> = _winState

@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tictactoe.compose.Cell
 import com.example.tictactoe.compose.PlayerNameLabel
+import com.example.tictactoe.data.GameState
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -22,6 +23,7 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
     val nowPlayer by viewModel.nowPlayer.collectAsState()
     val context = LocalContext.current
     val winState by viewModel.winState.collectAsState()
+    val gameState by viewModel.gameState.collectAsState()
 
     Column {
         boardState.forEachIndexed { rIndex, row ->
@@ -30,7 +32,16 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
                     Cell(
                         cell = cell,
                         modifier = Modifier
-                            .clickable {
+                            .clickable(
+                                enabled = when (gameState) {
+                                    GameState.IN_PROGRESS -> {
+                                        true
+                                    }
+                                    GameState.FINISH -> {
+                                        false
+                                    }
+                                }
+                            ) {
 //                        セルの状態書き換え
 //                        プレイヤーの変更
                                 if (!viewModel.isCellChosen(rIndex, cIndex)) {
@@ -46,8 +57,11 @@ fun Board(viewModel: PlayerViewModel = viewModel()) {
                 }
             }
         }
-        Text(text = winState.toString())
-        
+        if (gameState == GameState.FINISH) {
+
+            Text(text = winState.toString())
+        }
+
         PlayerNameLabel(nowPlayer = nowPlayer)
     }
 }

@@ -14,6 +14,9 @@ class PlayerViewModel : ViewModel() {
     val _nowPlayer: MutableStateFlow<Player> = MutableStateFlow(Player.ONE)
     val nowPlayer: StateFlow<Player> = _nowPlayer
 
+    val _gameTurnCount: MutableStateFlow<Int> = MutableStateFlow(1)
+    val gameTurnCount: StateFlow<Int> = _gameTurnCount
+
     val _gameState: MutableStateFlow<GameState> = MutableStateFlow(GameState.IN_PROGRESS)
     val gameState: StateFlow<GameState> = _gameState
 
@@ -59,15 +62,55 @@ class PlayerViewModel : ViewModel() {
                 }
             }.toMutableList()
         }
+        _gameTurnCount.value = _gameTurnCount.value + 1
         checkBattleState()
 
     }
 
-    fun checkBattleState(){
-        if(_boardState.value.any { col -> col.all { cellItem -> cellItem.value == CellState.CIRCLE } }){ _winState.value = WinState.Player1Win}
-        if(transpose(_boardState.value).any { col -> col.all { cellItem -> cellItem.value == CellState.CIRCLE   } }){ _winState.value = WinState.Player1Win  }
-        if(_boardState.value.any { col -> col.all { cellItem -> cellItem.value == CellState.CROSS } }){ _winState.value = WinState.Player2Win}
-        if(transpose(_boardState.value).any { col -> col.all { cellItem -> cellItem.value == CellState.CROSS   } }){ _winState.value = WinState.Player2Win  }
+    fun checkBattleState() {
+        boardCheck()
+        if (_gameTurnCount.value == 10) {
+            _gameState.value = GameState.FINISH
+        }
+
+    }
+
+    fun boardCheck() {
+        if (_boardState.value.any { col -> col.all { cellItem -> cellItem.value == CellState.CIRCLE } }) {
+            _winState.value = WinState.Player1Win
+            _gameState.value = GameState.FINISH
+        }
+        if (transpose(_boardState.value).any { col -> col.all { cellItem -> cellItem.value == CellState.CIRCLE } }) {
+            _winState.value = WinState.Player1Win
+            _gameState.value = GameState.FINISH
+        }
+        if (_boardState.value[0][0].value == CellState.CIRCLE && _boardState.value[1][1].value == CellState.CIRCLE && _boardState.value[2][2].value == CellState.CIRCLE) {
+            _winState.value = WinState.Player1Win
+            _gameState.value = GameState.FINISH
+        }
+        if (_boardState.value[0][2].value == CellState.CIRCLE && _boardState.value[1][1].value == CellState.CIRCLE && _boardState.value[2][0].value == CellState.CIRCLE) {
+            _winState.value = WinState.Player1Win
+            _gameState.value = GameState.FINISH
+        }
+
+
+        if (_boardState.value.any { col -> col.all { cellItem -> cellItem.value == CellState.CROSS } }) {
+            _winState.value = WinState.Player2Win
+            _gameState.value = GameState.FINISH
+        }
+        if (transpose(_boardState.value).any { col -> col.all { cellItem -> cellItem.value == CellState.CROSS } }) {
+            _winState.value = WinState.Player2Win
+            _gameState.value = GameState.FINISH
+        }
+        if (_boardState.value[0][0].value == CellState.CROSS && _boardState.value[1][1].value == CellState.CROSS && _boardState.value[2][2].value == CellState.CROSS) {
+            _winState.value = WinState.Player2Win
+            _gameState.value = GameState.FINISH
+        }
+        if (_boardState.value[0][2].value == CellState.CROSS && _boardState.value[1][1].value == CellState.CROSS && _boardState.value[2][0].value == CellState.CROSS) {
+            _winState.value = WinState.Player2Win
+            _gameState.value = GameState.FINISH
+        }
+
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.tictactoe
 
 import androidx.lifecycle.ViewModel
 import com.example.tictactoe.data.CellState
+import com.example.tictactoe.data.GameState
 import com.example.tictactoe.data.Player
 import com.example.tictactoe.data.WinState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,9 @@ class PlayerViewModel : ViewModel() {
     val nowCellState: MutableStateFlow<CellState> = MutableStateFlow(CellState.EMPTY)
     val _nowPlayer: MutableStateFlow<Player> = MutableStateFlow(Player.ONE)
     val nowPlayer: StateFlow<Player> = _nowPlayer
+
+    val _gameState: MutableStateFlow<GameState> = MutableStateFlow(GameState.IN_PROGRESS)
+    val gameState: StateFlow<GameState> = _gameState
 
     val _isChosen: MutableStateFlow<List<MutableList<Boolean>>> =
         MutableStateFlow(List(3) { MutableList(3) { false } })

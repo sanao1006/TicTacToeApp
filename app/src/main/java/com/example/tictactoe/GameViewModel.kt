@@ -76,41 +76,31 @@ class PlayerViewModel : ViewModel() {
     }
 
     fun boardCheck() {
-        if (_boardState.value.any { col -> col.all { cellItem -> cellItem.value == CellState.CIRCLE } }) {
-            _winState.value = WinState.Player1Win
-            _gameState.value = GameState.FINISH
-        }
-        if (transpose(_boardState.value).any { col -> col.all { cellItem -> cellItem.value == CellState.CIRCLE } }) {
-            _winState.value = WinState.Player1Win
-            _gameState.value = GameState.FINISH
-        }
-        if (_boardState.value[0][0].value == CellState.CIRCLE && _boardState.value[1][1].value == CellState.CIRCLE && _boardState.value[2][2].value == CellState.CIRCLE) {
-            _winState.value = WinState.Player1Win
-            _gameState.value = GameState.FINISH
-        }
-        if (_boardState.value[0][2].value == CellState.CIRCLE && _boardState.value[1][1].value == CellState.CIRCLE && _boardState.value[2][0].value == CellState.CIRCLE) {
-            _winState.value = WinState.Player1Win
-            _gameState.value = GameState.FINISH
+        val winningConditions = listOf(
+            listOf(0 to 0, 0 to 1, 0 to 2),
+            listOf(1 to 0, 1 to 1, 1 to 2),
+            listOf(2 to 0, 2 to 1, 2 to 2),
+            listOf(0 to 0, 1 to 0, 2 to 0),
+            listOf(0 to 1, 1 to 1, 2 to 1),
+            listOf(0 to 2, 1 to 2, 2 to 2),
+            listOf(0 to 0, 1 to 1, 2 to 2),
+            listOf(0 to 2, 1 to 1, 2 to 0),
+        )
+
+        val winningPlayer = when {
+            winningConditions.any { condition ->
+                condition.all { (x, y) -> _boardState.value[x][y].value == CellState.CIRCLE }
+            } -> WinState.Player1Win
+            winningConditions.any { condition ->
+                condition.all { (x, y) -> _boardState.value[x][y].value == CellState.CROSS }
+            } -> WinState.Player2Win
+            else -> null
         }
 
-
-        if (_boardState.value.any { col -> col.all { cellItem -> cellItem.value == CellState.CROSS } }) {
-            _winState.value = WinState.Player2Win
+        if (winningPlayer != null) {
+            _winState.value = winningPlayer
             _gameState.value = GameState.FINISH
         }
-        if (transpose(_boardState.value).any { col -> col.all { cellItem -> cellItem.value == CellState.CROSS } }) {
-            _winState.value = WinState.Player2Win
-            _gameState.value = GameState.FINISH
-        }
-        if (_boardState.value[0][0].value == CellState.CROSS && _boardState.value[1][1].value == CellState.CROSS && _boardState.value[2][2].value == CellState.CROSS) {
-            _winState.value = WinState.Player2Win
-            _gameState.value = GameState.FINISH
-        }
-        if (_boardState.value[0][2].value == CellState.CROSS && _boardState.value[1][1].value == CellState.CROSS && _boardState.value[2][0].value == CellState.CROSS) {
-            _winState.value = WinState.Player2Win
-            _gameState.value = GameState.FINISH
-        }
-
     }
 
 }

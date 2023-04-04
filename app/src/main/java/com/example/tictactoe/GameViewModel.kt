@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class PlayerViewModel : ViewModel() {
+class GameViewModel : ViewModel() {
     val nowCellState: MutableStateFlow<CellState> = MutableStateFlow(CellState.EMPTY)
     val _nowPlayer: MutableStateFlow<Player> = MutableStateFlow(Player.ONE)
     val nowPlayer: StateFlow<Player> = _nowPlayer
@@ -101,6 +101,15 @@ class PlayerViewModel : ViewModel() {
             _winState.value = winningPlayer
             _gameState.value = GameState.FINISH
         }
+    }
+
+    fun resetBoard(){
+        _boardState.value.forEach { row -> row.forEach { cell -> cell.value = CellState.EMPTY } }
+        _isChosen.value.forEach { row -> row.fill(false)}
+        _winState.value = WinState.Draw
+        _gameState.value = GameState.IN_PROGRESS
+        _gameTurnCount.value = 1
+        _nowPlayer.value = Player.ONE
     }
 
 }

@@ -27,7 +27,7 @@ fun Cell(
         modifier = modifier
             .width(80.dp)
             .height(80.dp)
-            .border(width = 1.dp, color = Color.Black)
+            .border(width = 1.dp, color = Color.Black),
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),

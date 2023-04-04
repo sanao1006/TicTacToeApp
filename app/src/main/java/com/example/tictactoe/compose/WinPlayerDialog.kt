@@ -8,10 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.tictactoe.GameViewModel
 import com.example.tictactoe.data.WinState
-
+import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
-fun WinPlayerDialog(winState: WinState) {
+fun WinPlayerDialog(
+    winState: WinState,
+    viewModel: GameViewModel = viewModel()
+) {
     AlertDialog(
         onDismissRequest = { },
         title = {Text("Winner...")},
@@ -31,7 +35,7 @@ fun WinPlayerDialog(winState: WinState) {
                     .padding(all = 12.dp),
                 horizontalArrangement = Arrangement.End
             ) {
-                TextButton(onClick = {  }) {
+                TextButton(onClick = { viewModel.resetBoard()  }) {
                     Text(text = "もう一回遊ぶ")
                 }
             }
